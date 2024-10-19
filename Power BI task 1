@@ -1,0 +1,31 @@
+AvgEngagementRate = 
+VAR CurrentIST = NOW() + TIME(5, 30, 0)
+VAR CurrentHour = HOUR(CurrentIST)
+RETURN
+IF(
+    CurrentHour >= 15 && CurrentHour < 17,  // Time condition
+    CALCULATE(
+        AVERAGE('SocialMedia'[engagement rate]),
+        'SocialMedia'[impressions] >= 100,
+        'SocialMedia'[likes] = 0,
+        'SocialMedia'[Date] >= DATE(2020, 1, 1),
+        'SocialMedia'[Date] <= DATE(2020, 6, 30)
+    ),
+    BLANK()
+)
+
+TotalImpressions = 
+VAR CurrentIST = NOW() + TIME(5, 30, 0)
+VAR CurrentHour = HOUR(CurrentIST)
+RETURN
+IF(
+    CurrentHour >= 15 && CurrentHour < 17,  // Time condition
+    CALCULATE(
+        SUM('SocialMedia'[impressions]),
+        'SocialMedia'[impressions] >= 100,
+        'SocialMedia'[likes] = 0,
+        'SocialMedia'[Date] >= DATE(2020, 1, 1),
+        'SocialMedia'[Date] <= DATE(2020, 6, 30)
+    ),
+    BLANK()
+)
